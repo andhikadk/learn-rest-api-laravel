@@ -1,0 +1,42 @@
+<?php
+
+namespace Database\Seeders;
+
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Major;
+use App\Models\Student;
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     */
+    public function run(): void
+    {
+        // \App\Models\User::factory(10)->create();
+
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        Major::create([
+            'code' => 'TI',
+            'name' => 'Teknik Informatika',
+        ]);
+
+        Major::create([
+            'code' => 'SI',
+            'name' => 'Sistem Informasi',
+        ]);
+
+        Major::create([
+            'code' => 'TE',
+            'name' => 'Teknik Elektro',
+        ]);
+
+        Student::factory(10)->create();
+    }
+}
