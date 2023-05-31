@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Repositories\StudentRepository;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -20,8 +19,14 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $major = $request->query('major');
+
+        if ($major) {
+            return $this->studentRepository->getStudentsByMajor($major);
+        }
+
         return $this->studentRepository->getStudents();
     }
 
