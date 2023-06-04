@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\StudentCollection;
 use App\Models\Student;
 use App\Repositories\StudentRepository;
+use App\Http\Resources\StudentResource;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -24,18 +26,12 @@ class StudentController extends Controller
         $major = $request->query('major');
 
         if ($major) {
-            return $this->studentRepository->getStudentsByMajor($major);
+            $students =  $this->studentRepository->getStudentsByMajor($major);
+            return StudentResource::collection($students);
         }
 
-        return $this->studentRepository->getStudents();
-    }
-
-    /**
-     * Display a listing of the resource by major.
-     */
-    public function indexByMajor($majorId)
-    {
-        return $this->studentRepository->getStudentsByMajor($majorId);
+        $students = $this->studentRepository->getStudents();
+        return new StudentCollection($students);
     }
 
     /**
@@ -51,9 +47,11 @@ class StudentController extends Controller
             'major_id'
         ]);
 
+        $data = new StudentResource($this->studentRepository->createStudent($student));
+
         return response()->json([
             'message' => 'Student created successfully',
-            'data' => $this->studentRepository->createStudent($student)
+            'data' => $data
         ], 201);
     }
 
@@ -62,7 +60,12 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        return $this->studentRepository->getStudentsById($student->id);
+        $data =  new StudentResource($this->studentRepository->getStudentsById($student->id));
+
+        return response()->json([
+            'message' => 'Student fetched successfully',
+            'data' => $data
+        ]);
     }
 
     /**
@@ -79,9 +82,11 @@ class StudentController extends Controller
             'major_id'
         ]);
 
+        $data = new StudentResource($this->studentRepository->updateStudent($student, $studentId));
+
         return response()->json([
             'message' => 'Student updated successfully',
-            'data' => $this->studentRepository->updateStudent($student, $studentId)
+            'data' => $data
         ], 200);
     }
 

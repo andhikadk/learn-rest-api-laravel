@@ -20,4 +20,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('students', StudentController::class);
-Route::get('students/major/{majorId}', [StudentController::class, 'indexByMajor']);
