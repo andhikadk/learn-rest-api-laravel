@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\StudentCollection;
-use App\Models\Student;
 use App\Repositories\StudentRepository;
 use App\Http\Resources\StudentResource;
 use Illuminate\Http\Request;
@@ -58,22 +57,21 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show($id)
     {
-        $data =  new StudentResource($this->studentRepository->getStudentsById($student->id));
+        $student =  new StudentResource($this->studentRepository->getStudentsById($id));
 
         return response()->json([
             'message' => 'Student fetched successfully',
-            'data' => $data
+            'data' => $student
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
-        $studentId = $student->id;
         $student = $request->only([
             'name',
             'nim',
@@ -82,7 +80,7 @@ class StudentController extends Controller
             'major_id'
         ]);
 
-        $data = new StudentResource($this->studentRepository->updateStudent($student, $studentId));
+        $data = new StudentResource($this->studentRepository->updateStudent($student, $id));
 
         return response()->json([
             'message' => 'Student updated successfully',
@@ -93,9 +91,9 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy($id)
     {
-        $this->studentRepository->deleteStudent($student->id);
+        $this->studentRepository->deleteStudent($id);
 
         return response()->json([
             'message' => 'Student deleted successfully'
