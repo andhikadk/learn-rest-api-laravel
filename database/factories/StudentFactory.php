@@ -20,7 +20,7 @@ class StudentFactory extends Factory
             'name' => $this->faker->name,
             'nim' => $this->faker->unique()->randomNumber(8),
             'gender' => $this->faker->randomElement(['L', 'P']),
-            'address' => $this->faker->address,
+            'gpa' => 0,
             'major_id' => $this->faker->numberBetween(1, 3),
         ];
     }

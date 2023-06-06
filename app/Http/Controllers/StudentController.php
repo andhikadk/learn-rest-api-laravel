@@ -26,7 +26,7 @@ class StudentController extends Controller
 
         if ($major) {
             $students =  $this->studentRepository->getStudentsByMajor($major);
-            return StudentResource::collection($students);
+            return new StudentCollection($students);
         }
 
         $students = $this->studentRepository->getStudents();
@@ -42,7 +42,7 @@ class StudentController extends Controller
             'name',
             'nim',
             'gender',
-            'address',
+            'gpa',
             'major_id'
         ]);
 
@@ -76,7 +76,7 @@ class StudentController extends Controller
             'name',
             'nim',
             'gender',
-            'address',
+            'gpa',
             'major_id'
         ]);
 

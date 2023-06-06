@@ -15,4 +15,9 @@ class Student extends Model
     {
         return $this->belongsTo(Major::class);
     }
+
+    public function transcripts()
+    {
+        return $this->hasMany(Transcript::class);
+    }
 }

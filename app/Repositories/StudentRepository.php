@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Student;
-use App\Http\Resources\StudentResource;
 
 class StudentRepository
 {
